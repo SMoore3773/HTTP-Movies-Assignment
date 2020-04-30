@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import MovieCard from "./MovieCard";
+import UpdateForm from '../UpdateForm';
+import {Route, Link} from 'react-router-dom';
 
-function Movie({ addToSavedList }) {
+function Movie(props) {
+  console.log('props in movie', props)
   const [movie, setMovie] = useState(null);
   const params = useParams();
-
+  
   const fetchMovie = (id) => {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
@@ -15,7 +18,7 @@ function Movie({ addToSavedList }) {
   };
 
   const saveMovie = () => {
-    addToSavedList(movie);
+    props.addToSavedList(movie);
   };
 
   useEffect(() => {
@@ -28,7 +31,7 @@ function Movie({ addToSavedList }) {
 
   return (
     <div className="save-wrapper">
-      <MovieCard movie={movie} />
+      <MovieCard {...props} movie={movie} />
 
       <div className="save-button" onClick={saveMovie}>
         Save
