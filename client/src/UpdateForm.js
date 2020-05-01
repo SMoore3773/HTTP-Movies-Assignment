@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {useParams, withRouter} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 
 const UpdateForm = props => {
     const params = useParams();
+    const history = useHistory();
+
     console.log('params in updateform',params)
     console.log('props in updateform',props);
     
@@ -33,7 +35,7 @@ const UpdateForm = props => {
                 return movie;
               }
             }));
-            props.history.push('/');
+            history.push('/');
           })
           .catch((err) => console.log('error in axios put',err));
     }
@@ -78,4 +80,4 @@ const UpdateForm = props => {
     )
 }
 
-export default withRouter(UpdateForm);
+export default UpdateForm;

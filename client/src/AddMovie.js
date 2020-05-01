@@ -1,9 +1,11 @@
 import React,{useState} from 'react';
 import axios from 'axios';
-import {useParams, withRouter} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 
 const AddMovie = props =>{
     const params = useParams();
+    const history = useHistory();
+    console.log('history in addmovie',history)
     console.log('props in addMovie',props)
     const [mov, setMov] = useState({title:'', director:'', metascore:'', stars:[]});
     const handleChanges = e =>{
@@ -21,7 +23,7 @@ const AddMovie = props =>{
        
           .then((res) => {
               console.log('res in put .then',res)
-            props.history.push('/');
+            history.push('/');
           })
           .catch((err) => console.log('error in axios put',err));
     }
@@ -64,4 +66,4 @@ const AddMovie = props =>{
     )
 }
 
-export default withRouter(AddMovie);
+export default AddMovie;
