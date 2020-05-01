@@ -1,10 +1,23 @@
 import React from 'react';
+import axios from 'axios';
 
 const MovieCard = props => {
-  const { title, director, metascore, stars } = props.movie;
   console.log('props in moviecard',props)
+  const { title, director, metascore, stars } = props.movie;
   const updateMovie = e =>{
     props.history.push(`/update-movie/${props.movie.id}`)
+  }
+
+  const deleteMovie = e =>{
+    console.log(e)
+    axios
+    .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
+    .then(res=>{
+      props.history.push('/')
+    })
+    .catch(err=>{
+      console.log('err in delete axios request: ',err)
+    })
   }
 
   return (
@@ -24,6 +37,7 @@ const MovieCard = props => {
         </div>
       ))}
       <button onClick={updateMovie}>Update Movie</button>
+      <button onClick={deleteMovie}>Delete Movie</button>
     </div>
   );
 };
