@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import {useParams, withRouter} from 'react-router-dom';
 
@@ -40,7 +40,8 @@ const UpdateForm = props => {
 
     return(
         <div>
-            <p>update movie form</p>
+            <h1>Edit Movie</h1>
+           
             <form onSubmit={handleSubmit}> 
                 <input
                     type='text'

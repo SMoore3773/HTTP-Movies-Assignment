@@ -9,10 +9,11 @@ const MovieCard = props => {
   }
 
   const deleteMovie = e =>{
-    console.log(e)
     axios
     .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
     .then(res=>{
+      console.log('res in axios delete .then', res)
+
       props.history.push('/')
     })
     .catch(err=>{
