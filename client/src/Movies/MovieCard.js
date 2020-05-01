@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import MovieList from './MovieList';
 
 const MovieCard = props => {
   console.log('props in moviecard',props)
   const { title, director, metascore, stars } = props.movie;
+
   const updateMovie = e =>{
     props.history.push(`/update-movie/${props.movie.id}`)
   }
@@ -14,8 +16,12 @@ const MovieCard = props => {
     .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
     .then(res=>{
       console.log('res in axios delete .then', res)
+      console.log(props.movieList)
+      props.setMovieList(props.movieList.filter(delMovie=> delMovie.id !== props.movie.id))
       props.history.push('/')
-    })
+      })
+      
+    
     .catch(err=>{
       console.log('err in delete axios request: ',err)
     })
