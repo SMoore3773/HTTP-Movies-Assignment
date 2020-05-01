@@ -1,7 +1,10 @@
 import React,{useState} from 'react';
 import axios from 'axios';
+import {useParams, withRouter} from 'react-router-dom';
 
 const AddMovie = props =>{
+    const params = useParams();
+    console.log('props in addMovie',props)
     const [mov, setMov] = useState({title:'', director:'', metascore:'', stars:[]});
     const handleChanges = e =>{
         setMov({...mov,id:Date.now(), [e.target.name]: e.target.value})
@@ -61,4 +64,4 @@ const AddMovie = props =>{
     )
 }
 
-export default AddMovie;
+export default withRouter(AddMovie);
