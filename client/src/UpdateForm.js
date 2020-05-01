@@ -1,26 +1,31 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {useParams} from 'react-router-dom';
+import {useParams, withRouter} from 'react-router-dom';
 
 const UpdateForm = props => {
     const params = useParams();
     console.log('params in updateform',params)
     console.log('props in updateform',props);
+    
 
     const [mov, setMov] = useState({title:'', director:'', metascore:'', stars:[]});
 
-
+    console.log('mov in update form', mov)
     const handleChanges = e =>{
-        if(e.target.name === 'stars'){
-            e.target.value = e.target.value.split(',')
-        }
-        setMov({...mov, [e.target.name]: e.target.value})
+        setMov({...mov,id:params.id, [e.target.name]: e.target.value})
     }
-    
+    const handleStars = e =>{
+        setMov({
+            ...mov,
+            stars: e.target.value.split(',')
+        })
+    }
     const handleSubmit = e =>{
         e.preventDefault();
-        axios.put(`http://localhost:3000/api/movies/${mov.id}`, mov)
+        axios.put(`http://localhost:5000/api/movies/${params.id}`, mov)
+       
           .then((res) => {
+              console.log('res in put .then',res)
             props.setMovieList(props.movieList.map(movie => {
               if (movie.id === mov.id) {
                 return res.data;
@@ -30,7 +35,7 @@ const UpdateForm = props => {
             }));
             props.history.push('/');
           })
-          .catch((err) => console.log(err.response));
+          .catch((err) => console.log('error in axios put',err));
     }
 
     return(
@@ -62,7 +67,7 @@ const UpdateForm = props => {
                     type='text'
                     name='stars'
                     value={mov.stars}
-                    onChange={handleChanges}
+                    onChange={handleStars}
                     placeholder='Stars'
                 />
 
@@ -72,4 +77,4 @@ const UpdateForm = props => {
     )
 }
 
-export default UpdateForm;
+export default withRouter(UpdateForm);
